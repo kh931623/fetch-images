@@ -2,24 +2,25 @@ const axios = require('axios').default
 const R = require('ramda')
 
 const client = axios.create({
-  baseURL: 'https://api.unsplash.com',
-  headers: {
-    Authorization: `Client-ID ${process.env.UNSPLASH_API_KEY}`
+  baseURL: 'https://pixabay.com/api',
+  params: {
+    key: process.env.PIXABAY_API_KEY
   }
 })
 
 const getTagsFromImage = R.pipe(
-  R.propOr([], 'tags'),
-  R.map(R.prop('title'))
+  R.propOr('', 'tags'),
+  R.split(','),
+  R.map(R.trim),
 )
 
 const formatImage = (image) => {
   return {
     image_ID: image.id,
-    thumbnails: image.urls.thumb,
-    preview: image.urls.regular,
-    title: image.alt_description,
-    source: 'Unsplash',
+    thumbnails: image.previewURL,
+    preview: image.webformatURL,
+    title: '',
+    source: 'Pixabay',
     tags: getTagsFromImage(image)
   }
 }
@@ -27,16 +28,16 @@ const formatImage = (image) => {
 const formatRes = R.pipe(
   R.pathOr([], [
     'data',
-    'results'
+    'hits'
   ]),
   R.map(formatImage)
 )
 
 const searchImages = async (key) => {
   try {
-    const res = await client.get('/search/photos', {
+    const res = await client.get('/', {
       params: {
-        query: key
+        q: key
       }
     })
 
