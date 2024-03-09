@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "DEBUG=fetch-images:* node ./bin/www",
-    "dev": "DEBUG=fetch-images:* nodemon ./bin/www"
+    "dev": "DEBUG=fetch-images:* nodemon --env-file=.env ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
