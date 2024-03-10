@@ -10,9 +10,13 @@ router.post('/', async (req, res) => {
     password
   } = req.body
 
-  await userService.register(username, password)
-
-  res.send('OK')
+  try {
+    await userService.register(username, password)
+    res.send('OK')
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error)
+  }
 });
 
 router.post('/login', async (req, res) => {
@@ -21,15 +25,15 @@ router.post('/login', async (req, res) => {
     password
   } = req.body
 
-  const isValidUser = await userService.login(username, password)
+  const token = await userService.login(username, password)
 
-  console.log('a', isValidUser);
-
-  if (!isValidUser) {
+  if (!token) {
     return res.status(401).send('wrong credentials')
   }
 
-  res.send('OK')
+  res.json({
+    access_token: token
+  })
 })
 
 module.exports = router;

@@ -1,9 +1,13 @@
-const bcrypt = require('bcrypt');
+const { promisify } = require('util')
 
-const { prisma } = require('../prisma')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
+
+const { prisma } = require('../prisma');
 
 const hashPassword = (password) => bcrypt.hash(password, 10)
 const verifyPassword = bcrypt.compare
+const signToken = promisify(jwt.sign)
 
 const register = async (username, password) => {
   const hashedPassword = await hashPassword(password)
@@ -23,7 +27,15 @@ const login = async (username, password) => {
     }
   })
 
-  return verifyPassword(password, user.password)
+  const valid = await verifyPassword(password, user.password)
+
+  if (!valid) return null
+
+  const token = await signToken(user, process.env.JWT_SECRET, {
+    expiresIn: '30m'
+  })
+
+  return token
 }
 
 module.exports = {
