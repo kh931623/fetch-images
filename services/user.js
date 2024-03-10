@@ -27,6 +27,8 @@ const login = async (username, password) => {
     }
   })
 
+  if (!user) return null
+
   const valid = await verifyPassword(password, user.password)
 
   if (!valid) return null
