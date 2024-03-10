@@ -16,6 +16,8 @@ const searchImages = async (key) => {
 
   if (imagesFromCache) return imagesFromCache
 
+  console.log('ImageSerivce.searchImages: sending req to 3rd parties ...');
+
   const results = await Promise.all([
     unsplashService.searchImages(key),
     pixabayService.searchImages(key),
