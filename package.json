@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "DEBUG=fetch-images:* node ./bin/www",
+    "start": "DEBUG=fetch-images:* node --env-file=.env ./bin/www",
     "dev": "DEBUG=fetch-images:* nodemon --env-file=.env ./bin/www"
   },
   "dependencies": {
