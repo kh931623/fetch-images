@@ -10,6 +10,7 @@ var usersRouter = require('./routes/users');
 const imageRouter = require('./routes/images')
 
 const validateCredentials = require('./middlewares/validateCredentials')
+const verifyAccessToken = require('./middlewares/verifyAccessToken')
 
 const { graphqlHandler } = require('./graphql')
 
@@ -24,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', validateCredentials, usersRouter);
-app.use('/images', imageRouter)
+app.use('/images', verifyAccessToken, imageRouter)
 
 // Create and use the GraphQL handler.
 app.all(
