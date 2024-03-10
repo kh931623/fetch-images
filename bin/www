@@ -6,6 +6,7 @@
 
 var app = require('../app');
 const { redisClient } = require('../redis')
+const { registerCronjobs } = require('../cronjobs')
 var debug = require('debug')('fetch-images:server');
 var http = require('http');
 
@@ -27,6 +28,7 @@ var server = http.createServer(app);
  */
 redisClient
   .connect()
+  .then(() => registerCronjobs())
   .then(() => server.listen(port))
 server.on('error', onError);
 server.on('listening', onListening);
