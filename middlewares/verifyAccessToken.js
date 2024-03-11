@@ -11,6 +11,8 @@ const getToken = R.pipe(
 )
 
 const verifyAccessToken = async (req, res, next) => {
+  if (process.env.DISABLE_AUTH) return next()
+
   try {
     const authHeader = req.get('Authorization')
 
