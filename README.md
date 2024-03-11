@@ -43,7 +43,6 @@ There is a web-GUI for testing graphql query.
 
 #### Example query
 
-Feel free to replace `"cat"` to any keyword
 ```
 {
   images(key: "cat") {
@@ -56,6 +55,7 @@ Feel free to replace `"cat"` to any keyword
   }
 }
 ```
+Feel free to replace `"cat"` to any keyword
 
 ### HTTP APIs
 
@@ -65,7 +65,7 @@ For playing with HTTP APIs, here are some good tools:
 
 
 ## API Endpoints
-host: `http://localhost:3000`
+Host: `http://localhost:3000`
 
 ### POST `/users`
 This API is for signing up.
@@ -93,7 +93,7 @@ This is the main API which is providing images from various 3rd party image lib.
 Headers
 - Authorization `string` `required`
   - plz send token in this format `Authorization: Bearer YOUR_TOKEN_HERE`
-  - you can however, disable the auth by setting `DISABLE_AUTH` in `.env`, so you dont have to provide access token to use this API.
+  - you can however, disable the auth by setting `DISABLE_AUTH` to any value in `.env`, so you dont have to provide access token to use this API.
 
 Query String
 - key `string` `required`
